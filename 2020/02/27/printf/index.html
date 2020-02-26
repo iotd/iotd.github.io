@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Go:fmt.Printf() 格式化占位符 | Jack Liu Blog Note Page</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Go,fmt.Printf() 格式化占位符," />
+  
+
+  <meta name="description" content="fmt.Printf() 格式化占位符格式符 fmt.Printf(&quot;%v&quot;, variable)1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go:fmt.Printf() 格式化占位符">
+<meta property="og:url" content="https://wdft.com/2020/02/27/printf/index.html">
+<meta property="og:site_name" content="Jack Liu Blog Note Page">
+<meta property="og:description" content="fmt.Printf() 格式化占位符格式符 fmt.Printf(&quot;%v&quot;, variable)1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-26T22:02:08.000Z">
+<meta property="article:modified_time" content="2020-02-26T22:13:40.181Z">
+<meta property="article:author" content="Jack Liu">
+<meta property="article:tag" content="Go,fmt.Printf() 格式化占位符">
+<meta name="twitter:card" content="summary">
+
+  
+
+  
+    <link rel="icon" href="[object Object]">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">MENU</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">MENU</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="https://wdft.com"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            Home
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            Notes
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            CAT
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            Search
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            Link
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            About
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#fmt-Printf-格式化占位符"><span class="toc-text">fmt.Printf() 格式化占位符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#格式符-fmt-Printf-quot-v-quot-variable"><span class="toc-text">格式符 fmt.Printf(&quot;%v&quot;, variable)</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-printf" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Go:fmt.Printf() 格式化占位符</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2020.02.27</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Jack Liu</span>
+        </span>
+      
+
+      <span class="post-count">
+        <i class="icon-text"></i>
+        Count:986
+      </span>
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Go/">Go</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <!-- toc -->
+
+<h1 id="fmt-Printf-格式化占位符"><a href="#fmt-Printf-格式化占位符" class="headerlink" title="fmt.Printf() 格式化占位符"></a>fmt.Printf() 格式化占位符</h1><h3 id="格式符-fmt-Printf-quot-v-quot-variable"><a href="#格式符-fmt-Printf-quot-v-quot-variable" class="headerlink" title="格式符 fmt.Printf(&quot;%v&quot;, variable)"></a>格式符 <code>fmt.Printf(&quot;%v&quot;, variable)</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"># 【通用占位符】</span><br><span class="line">    v 值的默认格式。</span><br><span class="line">    %+v 添加字段名(如结构体)</span><br><span class="line">    %#v　 相应值的Go语法表示</span><br><span class="line">    %T 相应值的类型的Go语法表示</span><br><span class="line">    %% 字面上的百分号，并非值的占位符　</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【布尔值】</span><br><span class="line">    %t true 或 false</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【整数值】</span><br><span class="line">    %b 二进制表示</span><br><span class="line">    %c 相应Unicode码点所表示的字符</span><br><span class="line">    %d 十进制表示</span><br><span class="line">    %o 八进制表示</span><br><span class="line">    %q 单引号围绕的字符字面值，由Go语法安全地转义</span><br><span class="line">    %x 十六进制表示，字母形式为小写 a-f</span><br><span class="line">    %X 十六进制表示，字母形式为大写 A-F</span><br><span class="line">    %U Unicode格式：U+1234，等同于 &quot;U+%04X&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【浮点数及复数】</span><br><span class="line">    %b 无小数部分的，指数为二的幂的科学计数法， </span><br><span class="line">       与 strconv.FormatFloat中的 &#39;b&#39; 转换格式一致。例如 -123456p-78</span><br><span class="line">    %e 科学计数法，例如 -1234.456e+78</span><br><span class="line">    %E 科学计数法，例如 -1234.456E+78</span><br><span class="line">    %f 有小数点而无指数，例如 123.456</span><br><span class="line">    %g 根据情况选择 %e 或 %f 以产生更紧凑的（无末尾的0）输出</span><br><span class="line">    %G 根据情况选择 %E 或 %f 以产生更紧凑的（无末尾的0）输出</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【字符串和bytes的slice表示】</span><br><span class="line">    %s 字符串或切片的无解译字节</span><br><span class="line">    %q 双引号围绕的字符串，由Go语法安全地转义</span><br><span class="line">    %x 十六进制，小写字母，每字节两个字符</span><br><span class="line">    %X 十六进制，大写字母，每字节两个字符</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【指针】</span><br><span class="line">    %p 十六进制表示，前缀 0x</span><br><span class="line">    这里没有 &#39;u&#39; 标记。若整数为无符号类型，他们就会被打印成无符号的。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【精度和对齐方式】</span><br><span class="line">    〔输出最少宽度〕〔．精度〕〔长度〕类型</span><br><span class="line">    &quot;%-md&quot; ：左对齐，若m比实际少时，按实际输出。</span><br><span class="line">    &quot;%m.ns&quot;：输出m位，取字符串(左起)n位，左补空格，当n&gt;m or m省略时m&#x3D;n</span><br><span class="line">    &quot;%m.nf&quot;：输出浮点数的输出宽度对齐，m为宽度，n为小数点右边数位</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【宽度和精度】</span><br><span class="line">    指示符(&#96;f&#39;)为例：</span><br><span class="line">    %f:      默认宽度和精度 </span><br><span class="line">    %mf      宽度m, 默认精度 </span><br><span class="line">    %.nf     默认宽度, 精度n </span><br><span class="line">    %m.nf    宽度m, 精度n </span><br><span class="line">    %m.f     宽度m, 精度0</span><br><span class="line">    若遇到浮点数的指示符(&#96;f&#39;)的话，它表示小数部分的位数。</span><br><span class="line">    若遇到浮点数的指示符(&#96;e&#39;, &#96;E&#39;, &#96;g&#39;, &#96;G&#39;)的话，它表示有效位数</span><br><span class="line">    若将精度设为&#96;*&#39;的话，将从参数中提取精度的值</span><br><span class="line">    整数的指示符(&#96;d&#39;, &#96;i&#39;, &#96;b&#39;, &#96;o&#39;, &#96;x&#39;, &#96;X&#39;, &#96;u&#39;)</span><br><span class="line">    其中对于字符串％s或者浮点类型％f,来说，精度可以截断数据的长度</span><br><span class="line">    &quot;%-md&quot; ：左对齐，若m比实际少时，按实际输出。</span><br><span class="line">    &quot;%m.ns&quot;：输出m位，取字符串(左起)n位，左补空格，当n&gt;m or m省略时m&#x3D;n</span><br><span class="line"></span><br><span class="line"># 【显示参数占位符】</span><br><span class="line">    %[2]d, %[1]d     以%d为例：先输出第二个值，再输出第一个值.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 【特殊格式标识符】</span><br><span class="line">    +     总打印数值的正负号；对于%q（%+q）保证只输出ASCII编码的字符。 </span><br><span class="line">    -     左对齐 </span><br><span class="line">    #     备用格式：</span><br><span class="line">              为八进制添加前导 0（%#o），</span><br><span class="line">                  为十六进制添加前导 0x（%#x）或0X（%#X），为 %p（%#p）去掉前导 0x；</span><br><span class="line">              对于 %q，若 strconv.CanBackquote 返回 true，</span><br><span class="line">                  就会打印原始（即反引号围绕的）字符串；</span><br><span class="line">              如果是可打印字符，%U（%#U）会写出该字符的</span><br><span class="line">                  Unicode编码形式（如字符 x 会被打印成 U+0078 &#39;x&#39;）。 </span><br><span class="line">    &#39; &#39;  （空格）为数值中省略的正负号留出空白（% d）；</span><br><span class="line">          以十六进制（% x, % X）打印字符串或切片时，在字节之间用空格隔开 </span><br><span class="line">    0     填充前导的0而非空格；对于数字，这会将填充移到正负号之后</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2020/02/27/pointer/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2020/02/27/reflect/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="https://wdft.com"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              Home
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              Notes
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              CAT
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              Search
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              Link
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              About
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'iotd',
+        repo: 'iotd.github.io',
+        oauth: {
+          client_id: 'f453594efa4e00fe9152',
+          client_secret: 'a009aba4beb7a4261248cd9ecefca7d2501f40e1'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
