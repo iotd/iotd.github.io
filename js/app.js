@@ -97,7 +97,7 @@
 
 
   if (location.pathname === '/search/') {
-    Util.request('GET', '/search.json', function(data) {
+    Util.request('GET', '/search/search.json', function(data) {
       var $inputSearch = document.getElementById('input-search');
       Util.bind($inputSearch, 'keyup', function() {
         var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
