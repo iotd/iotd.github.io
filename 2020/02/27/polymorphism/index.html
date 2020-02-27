@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Go:polymorphism | Jack Liu Blog Note Page</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Go,Go-Polymorphism," />
+  
+
+  <meta name="description" content="polymorphism多态特性 多态：同一件事情由于条件不同产生的结果不同； 由于Go语言中结构体不能相互转换，所以没有结构体类型的多态，只有基于接口的多态。这符合Go语言对面向对象的诠释；   多态和泛型的区别 泛型是当我们使用这个泛型类时候再去确定这个类里面的成员具体什么类型的，两者本质不是一个层次，多态不能实现泛型。 多态是在继承层面上，即根据实际运行时候来确定具体的实现。 泛型本质上">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go:polymorphism">
+<meta property="og:url" content="https://wdft.com/2020/02/27/polymorphism/index.html">
+<meta property="og:site_name" content="Jack Liu Blog Note Page">
+<meta property="og:description" content="polymorphism多态特性 多态：同一件事情由于条件不同产生的结果不同； 由于Go语言中结构体不能相互转换，所以没有结构体类型的多态，只有基于接口的多态。这符合Go语言对面向对象的诠释；   多态和泛型的区别 泛型是当我们使用这个泛型类时候再去确定这个类里面的成员具体什么类型的，两者本质不是一个层次，多态不能实现泛型。 多态是在继承层面上，即根据实际运行时候来确定具体的实现。 泛型本质上">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-26T22:02:09.000Z">
+<meta property="article:modified_time" content="2020-02-26T22:25:09.311Z">
+<meta property="article:author" content="Jack Liu">
+<meta property="article:tag" content="Go,Go-Polymorphism">
+<meta name="twitter:card" content="summary">
+
+  
+
+  
+    <link rel="icon" href="[object Object]">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+  <style type="text/javascript">
+  .github-corner { 
+      display: none;
+  }
+  @media (min-width: 768px) { 
+    .github-corner { 
+      display: inline;
+    }
+  }
+  </style>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<a href="https://github.com/iotd" target="_blank" rel="noopener" class="github-corner" aria-label="View source on iotd@GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#70B7FD; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">MENU</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">MENU</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="https://wdft.com"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            Home
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            Notes
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            CAT
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            Search
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            Link
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            About
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#polymorphism"><span class="toc-text">polymorphism</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#多态特性"><span class="toc-text">多态特性</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#多态和泛型的区别"><span class="toc-text">多态和泛型的区别</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-polymorphism" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Go:polymorphism</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2020.02.27</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Jack Liu</span>
+        </span>
+      
+
+      <span class="post-count">
+        <i class="icon-text"></i>
+        Count:214
+      </span>
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Go/">Go</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <!-- toc -->
+
+<h1 id="polymorphism"><a href="#polymorphism" class="headerlink" title="polymorphism"></a>polymorphism</h1><h1 id="多态特性"><a href="#多态特性" class="headerlink" title="多态特性"></a>多态特性</h1><ul>
+<li>多态：同一件事情由于条件不同产生的结果不同；</li>
+<li>由于Go语言中结构体不能相互转换，所以没有结构体类型的多态，只有基于接口的多态。<br>这符合Go语言对面向对象的诠释； </li>
+</ul>
+<h1 id="多态和泛型的区别"><a href="#多态和泛型的区别" class="headerlink" title="多态和泛型的区别"></a>多态和泛型的区别</h1><ul>
+<li>泛型是当我们使用这个泛型类时候再去确定这个类里面的成员具体什么类型的，两者<em>本质</em>不是一个层次，多态不能实现泛型。</li>
+<li>多态是在继承层面上，即根据实际运行时候来确定具体的实现。</li>
+<li>泛型本质上并不是多态的一种特例，多态并不能实现泛型。</li>
+<li>引入泛型的本质是为了安全，把编译时能发现的错误不带到runtime运行时。</li>
+</ul>
+
+    
+  </div>
+</article>
+
+
+
+   
+   <!-- size of one module in pixels, default 6 -->
+   <div class="content content-post CENTER">
+      <div style="text-align: center;">
+         <img  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIQAAACECAAAAAB0L9x7AAAByUlEQVR42u3a2Y6DMBBEUf7/p8m8RJoEu+o2jHAzKr9kESEHyXIv9raJsf+M9+t7zD6PfvP72u3sCGIJYh8Mh/j+A4Ua3eeAC6Idgk7I2XWjB1LXHT4H8RjE6Bo1IUeLUxD/C0H/3C1qQTwPMQtgbiEa5SWz609H0SBuR5BE9y9eL2fbQdyC2M2YLUZ0cqL/CKIVQiUvasGhwY4USEH0QrjiVhU0CqOS5MP7IFohSJNr9p0KWOV7BtESQScWDW6u2SoDWBAtECohJU10VdyoBwuiH8IVq+TGlYaKDGJBtEG4wEQbHlcLpSD6IGhyStAuIQqiN8JtmO2FQYrrYUIcRDsEXWDIwQ01OW30DKIVgk6ySkGjAtfH+yBaISrNM3d4q7Jxjzo1QSxBkKKleuiL/Bbt6gaxBFFpkBJ45eBPqfoK4jaESmTcZHP5SLkKD6INwiUeZEPOwWSADKIVgq5kbjMFTUD1QEG0QdDGBw1K1b3WIPoh6AFAldySw17V5nsQaxFkA4U+iWvITsFBtEOQZodakNDCQxpnQbRHkCTHHRpETfwgHoegyS1NcEqLVRBLEK6AJQ0Rt4knrwuiFaKS6J6dsG7CB9EG8QLrhMAQuNFDMgAAAABJRU5ErkJggg==" />
+      </div>
+   </div>
+
+   
+
+
+   <div>
+    <ul class="post-copyright">
+      <li class="post-copyright-author">
+      <strong>作者:  </strong>Jack Liu</a>
+      </li>
+      <li class="post-copyright-link">
+      <strong>文章连结:  </strong>
+      <a href="/2020/02/27/polymorphism/" target="_blank" title="Go:polymorphism">https://wdft.com/2020/02/27/polymorphism/</a>
+      </li>
+      <li class="post-copyright-license">
+        <strong>版权声明:  CC BY-NC-SA 4.0 </strong>
+        本网志所有文章除特别声明外,均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+        许可协议。转载请注明出处!
+      </li>
+    </ul>
+  <div>
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2020/02/27/reflect/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2020/02/27/silce/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="https://wdft.com"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              Home
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              Notes
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              CAT
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              Search
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              Link
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              About
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+  <div id="gitment-comments"></div>
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+  <script>
+    (function () {
+      var gitment = new Gitment({
+        owner: 'iotd',
+        repo: 'iotd.github.io',
+        oauth: {
+          client_id: 'f453594efa4e00fe9152',
+          client_secret: 'a009aba4beb7a4261248cd9ecefca7d2501f40e1'
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+      })
+      gitment.render('gitment-comments')
+    })()
+  </script>
+
+
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
