@@ -164,7 +164,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">Posts List</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#interface-接口"><span class="toc-text">interface 接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#go：interface-、断言与类型转换"><span class="toc-text">go：interface{}、断言与类型转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口转换基本原则"><span class="toc-text">接口转换基本原则</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#断言推荐方式："><span class="toc-text">断言推荐方式：</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#interface值传递注意事项："><span class="toc-text">interface值传递注意事项：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#interface-与-interface"><span class="toc-text">interface{} 与 []interface{}</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#接口转换"><span class="toc-text">接口转换</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#原因："><span class="toc-text">原因：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#使用方式："><span class="toc-text">使用方式：</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口类型内存布局-原理"><span class="toc-text">接口类型内存布局(原理)</span></a></li></ol></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#interface-接口"><span class="toc-text">interface 接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#go：interface-、断言与类型转换"><span class="toc-text">go：interface{}、断言与类型转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口转换基本原则"><span class="toc-text">接口转换基本原则</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#断言推荐方式："><span class="toc-text">断言推荐方式：</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#interface值传递注意事项："><span class="toc-text">interface值传递注意事项：</span></a></li></ol></li></ol></li></ol>
   </div>
 
 
@@ -189,7 +189,7 @@
 
       <span class="post-count">
         <i class="icon-text"></i>
-        Count:1.6k
+        Count:1.5k
       </span>
 
       
@@ -221,51 +221,99 @@
 <li>接口类型 =》普通类型：必须显式类型断言。</li>
 <li>超集和子集转换关系：超转子可以，子转超不可以。</li>
 </ul>
-<h6 id="断言推荐方式："><a href="#断言推荐方式：" class="headerlink" title="断言推荐方式："></a>断言推荐方式：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">b,ok:&#x3D;a.([]int)</span><br><span class="line">if ok&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;断言失败在编译阶段不会报错，故很可能出现断言失败导致运行错误。</span><br></pre></td></tr></table></figure>
+<h6 id="断言推荐方式："><a href="#断言推荐方式：" class="headerlink" title="断言推荐方式："></a>断言推荐方式：</h6><pre><code>
+b,ok:=a.([]int)
+if ok{
+    ...
+}
 
-<ul>
+//断言失败在编译阶段不会报错，故很可能出现断言失败导致运行错误。</code></pre><ul>
 <li>1.断言的作用：使用interface{}时，解决空接口类型向普通类型转换的类型转换问题；</li>
 <li>2.普通类型之间的转换，使用显式的类型转换，否则后果严重不可控。</li>
 </ul>
 <h3 id="interface值传递注意事项："><a href="#interface值传递注意事项：" class="headerlink" title="interface值传递注意事项："></a>interface值传递注意事项：</h3><ul>
-<li>如果接口实现方法，类型自己的实现使用的是值接收器，那么在传递值的时候无论使用指针还是值都可以。</li>
-<li>如果接口实现方法，类型自己的实现使用的是指针接收器，那么在传递值的时候必须传递地址。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">原因：编译器不能自动获得一个未声明地址。</span><br><span class="line"></span><br><span class="line">结构体类型定义的方法可以被该结构体的指针类型调用；而结构体类型调用该指针类型的方法时是被转换成指针，不是直接调用。</span><br><span class="line">接口实现方法时，用指针类型实现的接口函数只能算是指针类型实现的，用结构体类型实现的方法也作为是指针类型实现。</span><br></pre></td></tr></table></figure>
-
+<li><p>如果接口实现方法，类型自己的实现使用的是值接收器，那么在传递值的时候无论使用指针还是值都可以。</p>
 </li>
-</ul>
-<h3 id="interface-与-interface"><a href="#interface-与-interface" class="headerlink" title="interface{} 与 []interface{}"></a>interface{} 与 []interface{}</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var dataSlice []int &#x3D; foo()</span><br><span class="line">var interfaceSlice []interface&#123;&#125; &#x3D; dataSlice</span><br></pre></td></tr></table></figure>
-<p><strong>编译错误</strong>  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cannot use dataSlice (type []int) as type []interface &#123; &#125; in assignment</span><br></pre></td></tr></table></figure>
-<p>任何类型赋值给interface{}，不能把任何类型的切片赋值到[]interface{}<br> <strong>不能</strong> 直接将某些[]MyType切片赋值给[]interface{}， 他们背后代表的数据意义不同。   </p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> &#x2F;&#x2F;编译错误</span><br><span class="line">&#x2F;&#x2F;t :&#x3D; []int&#123;1, 2, 3, 4&#125; wrong </span><br><span class="line">&#x2F;&#x2F;var s []interface&#123;&#125; &#x3D; t </span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;正确</span><br><span class="line">t :&#x3D; []int&#123;1, 2, 3, 4&#125; &#x2F;&#x2F;right </span><br><span class="line">s :&#x3D; make([]interface&#123;&#125;, len(t)) </span><br><span class="line">for i, v :&#x3D; range t &#123; </span><br><span class="line"> s[i] &#x3D; v </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="接口转换"><a href="#接口转换" class="headerlink" title="接口转换"></a>接口转换</h6><ul>
-<li>利用类型推断，可判断接口对象是否某个具体的接口或类型。  </li>
-<li>还可用 switch 做批量类型判断，不支持 fallthrough。  </li>
-<li>超集接口对象可转换为子集接口，反之出错。  </li>
-</ul>
-<h6 id="原因："><a href="#原因：" class="headerlink" title="原因："></a>原因：</h6><ul>
-<li>[]interface{}类型 <strong>不是</strong> interface{}类型， 它是一个切片，切片元素的类型恰好是interface{}。</li>
-<li>[]interface{}类型变量拥有特定的内存结构，这在编译时就已经决定。每个interface{}占两个字（word)，一个字用于存放interface存放的类型，另一个字用于存放实际数据或者是指向数据的指针。于是长度为N的[]interface{}类型切片背后是一个N<em>2字长的一块数据。<br>这与一般的[]MyType类型切片不同，相同长度的[]MyType切片背后的数据块大小为N</em>sizeof(MyType)字长。   </li>
-</ul>
-<h6 id="使用方式："><a href="#使用方式：" class="headerlink" title="使用方式："></a>使用方式：</h6><p>如果想得到一个元素为任意类型的列表的容器，并且在索引其中元素之前会把它转换为原本的数据类型，可以直接使用interface{}即可。此种方式很通用（如果 <strong>不是编译时类型安全</strong> 的）也很快速。   </p>
-<h3 id="接口类型内存布局-原理"><a href="#接口类型内存布局-原理" class="headerlink" title="接口类型内存布局(原理)"></a>接口类型内存布局(原理)</h3><p>interface在内存上实际由两个成员组成</p>
-<ul>
-<li>tab指向虚表(Virtual Table)</li>
-<li>data则指向实际引用的数据。</li>
-<li>虚表描绘了实际的类型信息及该接口所需要的方法集。</li>
-</ul>
-<p>接口的底层结构<br>runtime.h</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">struct Iface</span><br><span class="line">&#123;</span><br><span class="line">	Itab* tab;</span><br><span class="line">	void* data;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct Itab</span><br><span class="line">&#123;</span><br><span class="line">	InterfaceType* inter;</span><br><span class="line">	Type* type;</span><br><span class="line">	void (*fun[])(void);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct Itab</span><br><span class="line">&#123;</span><br><span class="line">	InterfaceType* inter;</span><br><span class="line">	Type* type;</span><br><span class="line">	void (*fun[])(void);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;只有 tab 和 data 都为 nil 时，接口才等于 nil。</span><br></pre></td></tr></table></figure>
+<li><p>如果接口实现方法，类型自己的实现使用的是指针接收器，那么在传递值的时候必须传递地址。</p>
+<pre><code>原因：编译器不能自动获得一个未声明地址。
 
-<p>接口Demo：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">type People interface &#123;</span><br><span class="line">	Do()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type Student struct &#123;</span><br><span class="line">	UserId   int</span><br><span class="line">	UserName string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (s Student) Do() &#123;</span><br><span class="line">	s.UserName &#x3D; &quot;Jack Liu&quot;</span><br><span class="line">	return</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	stu :&#x3D; Student&#123;1, &quot;Jack&quot;&#125;</span><br><span class="line">	p :&#x3D; People(stu)&#x2F;&#x2F;</span><br><span class="line">	&#x2F;&#x2F;a.Do()</span><br><span class="line">	fmt.Printf(&quot;%T %v&quot;, p, p)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+结构体类型定义的方法可以被该结构体的指针类型调用；而结构体类型调用该指针类型的方法时是被转换成指针，不是直接调用。
+接口实现方法时，用指针类型实现的接口函数只能算是指针类型实现的，用结构体类型实现的方法也作为是指针类型实现。
+</code></pre></li>
+</ul>
+<pre><code>
+### interface{} 与 []interface{}
+</code></pre><p>var dataSlice []int = foo()<br>var interfaceSlice []interface{} = dataSlice</p>
+<pre><code>**编译错误**  </code></pre><p>cannot use dataSlice (type []int) as type []interface { } in assignment  </p>
+<pre><code>任何类型赋值给interface{}，不能把任何类型的切片赋值到[]interface{}   
+ **不能** 直接将某些[]MyType切片赋值给[]interface{}， 他们背后代表的数据意义不同。   
+</code></pre><p> //编译错误<br>//t := []int{1, 2, 3, 4} wrong<br>//var s []interface{} = t </p>
+<p>//正确<br>t := []int{1, 2, 3, 4} //right<br>s := make([]interface{}, len(t))<br>for i, v := range t {<br> s[i] = v<br>}</p>
+<pre><code>###### 接口转换
+* 利用类型推断，可判断接口对象是否某个具体的接口或类型。  
+* 还可用 switch 做批量类型判断，不支持 fallthrough。  
+* 超集接口对象可转换为子集接口，反之出错。  
 
-<p>People接口本身，底层含有tab虚表和data实际存储的值两部分；    </p>
-<figure class="highlight plain"><figcaption><span>:</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">**通过接口进行函数调用** ，实际的操作其实就是&#96;&#96;&#96;p.tab-&gt;fun[0](p.data)&#96;&#96;&#96;;  </span><br><span class="line"></span><br><span class="line">###### 参考Go和C++的虚表的异同：</span><br><span class="line">* C++：</span><br><span class="line">    * c++ 的虚表是在编译时生成的，注意：表现出的多态是在runtime运行时决定;</span><br><span class="line">    * 每个class创建了一个方法集(虚表);</span><br><span class="line">    * 当子类重写父类的虚函数时，就将表中的相应函数指针改为子类自己实现的函数;</span><br><span class="line">    * 如果没有则指向父类的实现;</span><br><span class="line">    * 当面临多继承时，C++对象结构里就会存在多个虚表指针，每个虚表指针指向该方法集的不同部分。</span><br><span class="line">* Go:</span><br><span class="line">    * Go 接口的虚表是在runtime运行时生成；</span><br><span class="line">    * &#96;&#96;&#96; p :&#x3D; People(Student&#123;1, &quot;Jack&quot;&#125;)&#96;&#96;&#96;生成People接口对应于Student类型的虚表，并将其缓存。</span><br><span class="line">###### 原因：</span><br><span class="line">* Go无继承关系，采用的是组合方式，所以不能进行虚表初始化(多少类型实现了某个接口，单个类型到底实现了多少接口这让编译器无从获知.</span><br><span class="line">* 选择在运行时生成虚表是自然的方案，放到runtime运行时，只要在需要接口的去分析一下类型是否实现了接口的所有方法即可，这样避免了去维护大量继承和绑定关系的心智负担，此并不会带来性能上的太大问题。</span><br><span class="line">* Go接口组合的方案和C++反其道而行之，本质上来说，各有优缺点。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 接口技巧</span><br><span class="line">让编译器检查，以确保某个类型实现接口。</span><br><span class="line">&#96;&#96;&#96; var _ fmt.Stringer &#x3D; (*Data)(nil)</span><br></pre></td></tr></table></figure>
 
-<p>某些时候，让函数直接 “实现” 接口能省不少事。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">type Tester interface &#123;</span><br><span class="line">	Do()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type FuncDo func()</span><br><span class="line">func (self FuncDo) Do() &#123; self() &#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	var t Tester &#x3D; FuncDo(func() &#123; println(&quot;Hello, World!&quot;) &#125;)</span><br><span class="line">	t.Do()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+###### 原因：
+* []interface{}类型 **不是** interface{}类型， 它是一个切片，切片元素的类型恰好是interface{}。
+* []interface{}类型变量拥有特定的内存结构，这在编译时就已经决定。每个interface{}占两个字（word)，一个字用于存放interface存放的类型，另一个字用于存放实际数据或者是指向数据的指针。于是长度为N的[]interface{}类型切片背后是一个N*2字长的一块数据。   
+这与一般的[]MyType类型切片不同，相同长度的[]MyType切片背后的数据块大小为N*sizeof(MyType)字长。   
 
+###### 使用方式：
+如果想得到一个元素为任意类型的列表的容器，并且在索引其中元素之前会把它转换为原本的数据类型，可以直接使用interface{}即可。此种方式很通用（如果 **不是编译时类型安全** 的）也很快速。   
+
+
+### 接口类型内存布局(原理)
+
+interface在内存上实际由两个成员组成
+* tab指向虚表(Virtual Table)
+* data则指向实际引用的数据。
+* 虚表描绘了实际的类型信息及该接口所需要的方法集。
+
+
+接口的底层结构
+runtime.h</code></pre><p>struct Iface<br>{<br>    Itab* tab;<br>    void* data;<br>};</p>
+<p>struct Itab<br>{<br>    InterfaceType* inter;<br>    Type* type;<br>    void (*fun[])(void);<br>};</p>
+<p>struct Itab<br>{<br>    InterfaceType* inter;<br>    Type* type;<br>    void (*fun[])(void);<br>};</p>
+<p>//只有 tab 和 data 都为 nil 时，接口才等于 nil。</p>
+<pre><code>
+接口Demo：</code></pre><p>package main</p>
+<p>import (<br>    “fmt”<br>)</p>
+<p>type People interface {<br>    Do()<br>}</p>
+<p>type Student struct {<br>    UserId   int<br>    UserName string<br>}</p>
+<p>func (s Student) Do() {<br>    s.UserName = “Jack Liu”<br>    return<br>}</p>
+<p>func main() {<br>    stu := Student{1, “Jack”}<br>    p := People(stu)//<br>    //a.Do()<br>    fmt.Printf(“%T %v”, p, p)<br>}</p>
+<pre><code>
+People接口本身，底层含有tab虚表和data实际存储的值两部分；    
+```p := People(Student{1, &quot;Jack&quot;})//此是合法的```，本质：    
+**通过接口进行函数调用** ，实际的操作其实就是```p.tab-&gt;fun[0](p.data)```;  
+
+###### 参考Go和C++的虚表的异同：
+* C++：
+    * c++ 的虚表是在编译时生成的，注意：表现出的多态是在runtime运行时决定;
+    * 每个class创建了一个方法集(虚表);
+    * 当子类重写父类的虚函数时，就将表中的相应函数指针改为子类自己实现的函数;
+    * 如果没有则指向父类的实现;
+    * 当面临多继承时，C++对象结构里就会存在多个虚表指针，每个虚表指针指向该方法集的不同部分。
+* Go:
+    * Go 接口的虚表是在runtime运行时生成；
+    * ``` p := People(Student{1, &quot;Jack&quot;})```生成People接口对应于Student类型的虚表，并将其缓存。
+###### 原因：
+* Go无继承关系，采用的是组合方式，所以不能进行虚表初始化(多少类型实现了某个接口，单个类型到底实现了多少接口这让编译器无从获知.
+* 选择在运行时生成虚表是自然的方案，放到runtime运行时，只要在需要接口的去分析一下类型是否实现了接口的所有方法即可，这样避免了去维护大量继承和绑定关系的心智负担，此并不会带来性能上的太大问题。
+* Go接口组合的方案和C++反其道而行之，本质上来说，各有优缺点。
+
+
+
+### 接口技巧
+让编译器检查，以确保某个类型实现接口。
+``` var _ fmt.Stringer = (*Data)(nil) ```
+
+某些时候，让函数直接 &quot;实现&quot; 接口能省不少事。</code></pre><p>type Tester interface {<br>    Do()<br>}</p>
+<p>type FuncDo func()<br>func (self FuncDo) Do() { self() }</p>
+<p>func main() {<br>    var t Tester = FuncDo(func() { println(“Hello, World!”) })<br>    t.Do()<br>}</p>
+<pre><code></code></pre>
     
   </div>
 </article>
@@ -305,7 +353,7 @@
     <a class="show pull-left" href="/2020/02/27/init/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2020/02/27/json/">
+    <a class="show pull-right" href="/2020/02/27/make-new/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>

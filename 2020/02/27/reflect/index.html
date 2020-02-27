@@ -15,12 +15,12 @@
     <meta name="keywords" content="Go,reflect 反射," />
   
 
-  <meta name="description" content="reflect 反射reflect 包类型定义123456789101112131415161718192021222324252627282930313233&#x2F;&#x2F;reflect 包类型定义type Kind Signconst (    Invalid Kind &#x3D; iota  &#x2F;&#x2F; 非法类型    Bool">
+  <meta name="description" content="reflect 反射reflect 包类型定义&#x2F;&#x2F;reflect 包类型定义  type Kind Sign  const (     Invalid Kind &#x3D; iota  &#x2F;&#x2F; 非法类型     Bool                 &#x2F;&#x2F; 布尔型     Int                  &#x2F;&#x2F; 有符号整型     Int8                 &#x2F;&#x2F; 有符号8位整型">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go:reflect 反射">
 <meta property="og:url" content="https://wdft.com/2020/02/27/reflect/index.html">
 <meta property="og:site_name" content="Jack Liu Blog Note Page">
-<meta property="og:description" content="reflect 反射reflect 包类型定义123456789101112131415161718192021222324252627282930313233&#x2F;&#x2F;reflect 包类型定义type Kind Signconst (    Invalid Kind &#x3D; iota  &#x2F;&#x2F; 非法类型    Bool">
+<meta property="og:description" content="reflect 反射reflect 包类型定义&#x2F;&#x2F;reflect 包类型定义  type Kind Sign  const (     Invalid Kind &#x3D; iota  &#x2F;&#x2F; 非法类型     Bool                 &#x2F;&#x2F; 布尔型     Int                  &#x2F;&#x2F; 有符号整型     Int8                 &#x2F;&#x2F; 有符号8位整型">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-02-26T22:02:09.000Z">
 <meta property="article:modified_time" content="2020-02-26T22:14:14.832Z">
@@ -189,7 +189,7 @@
 
       <span class="post-count">
         <i class="icon-text"></i>
-        Count:326
+        Count:269
       </span>
 
       
@@ -211,9 +211,40 @@
     
       <!-- toc -->
 
-<h1 id="reflect-反射"><a href="#reflect-反射" class="headerlink" title="reflect 反射"></a>reflect 反射</h1><h3 id="reflect-包类型定义"><a href="#reflect-包类型定义" class="headerlink" title="reflect 包类型定义"></a>reflect 包类型定义</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;reflect 包类型定义</span><br><span class="line"></span><br><span class="line">type Kind Sign</span><br><span class="line"></span><br><span class="line">const (</span><br><span class="line">    Invalid Kind &#x3D; iota  &#x2F;&#x2F; 非法类型</span><br><span class="line">    Bool                 &#x2F;&#x2F; 布尔型</span><br><span class="line">    Int                  &#x2F;&#x2F; 有符号整型</span><br><span class="line">    Int8                 &#x2F;&#x2F; 有符号8位整型</span><br><span class="line">    Int16                &#x2F;&#x2F; 有符号16位整型</span><br><span class="line">    Int32                &#x2F;&#x2F; 有符号32位整型</span><br><span class="line">    Int64                &#x2F;&#x2F; 有符号64位整型</span><br><span class="line">    Uint                 &#x2F;&#x2F; 无符号整型</span><br><span class="line">    Uint8                &#x2F;&#x2F; 无符号8位整型</span><br><span class="line">    Uint16               &#x2F;&#x2F; 无符号16位整型</span><br><span class="line">    Uint32               &#x2F;&#x2F; 无符号32位整型</span><br><span class="line">    Uint64               &#x2F;&#x2F; 无符号64位整型</span><br><span class="line">    Uintptr              &#x2F;&#x2F; 指针</span><br><span class="line">    Float32              &#x2F;&#x2F; 单精度浮点数</span><br><span class="line">    Float64              &#x2F;&#x2F; 双精度浮点数</span><br><span class="line">    Complex64            &#x2F;&#x2F; 64位复数类型</span><br><span class="line">    Complex128           &#x2F;&#x2F; 128位复数类型</span><br><span class="line">    Array                &#x2F;&#x2F; 数组</span><br><span class="line">    Chan                 &#x2F;&#x2F; 通道</span><br><span class="line">    Func                 &#x2F;&#x2F; 函数</span><br><span class="line">    Interface            &#x2F;&#x2F; 接口</span><br><span class="line">    Map                  &#x2F;&#x2F; 映射</span><br><span class="line">    Ptr                  &#x2F;&#x2F; 指针</span><br><span class="line">    Slice                &#x2F;&#x2F; 切片</span><br><span class="line">    String               &#x2F;&#x2F; 字符串</span><br><span class="line">    Struct               &#x2F;&#x2F; 结构体</span><br><span class="line">    UnsafePointer        &#x2F;&#x2F; 底层指针</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h1 id="reflect-反射"><a href="#reflect-反射" class="headerlink" title="reflect 反射"></a>reflect 反射</h1><h3 id="reflect-包类型定义"><a href="#reflect-包类型定义" class="headerlink" title="reflect 包类型定义"></a>reflect 包类型定义</h3><pre><code>//reflect 包类型定义
 
-<h3 id="反射性能的一般原则"><a href="#反射性能的一般原则" class="headerlink" title="反射性能的一般原则"></a>反射性能的一般原则</h3><p>基准测试结果的数值分析的一般原则建议：</p>
+type Kind Sign
+
+const (
+    Invalid Kind = iota  // 非法类型
+    Bool                 // 布尔型
+    Int                  // 有符号整型
+    Int8                 // 有符号8位整型
+    Int16                // 有符号16位整型
+    Int32                // 有符号32位整型
+    Int64                // 有符号64位整型
+    Uint                 // 无符号整型
+    Uint8                // 无符号8位整型
+    Uint16               // 无符号16位整型
+    Uint32               // 无符号32位整型
+    Uint64               // 无符号64位整型
+    Uintptr              // 指针
+    Float32              // 单精度浮点数
+    Float64              // 双精度浮点数
+    Complex64            // 64位复数类型
+    Complex128           // 128位复数类型
+    Array                // 数组
+    Chan                 // 通道
+    Func                 // 函数
+    Interface            // 接口
+    Map                  // 映射
+    Ptr                  // 指针
+    Slice                // 切片
+    String               // 字符串
+    Struct               // 结构体
+    UnsafePointer        // 底层指针
+)
+</code></pre><h3 id="反射性能的一般原则"><a href="#反射性能的一般原则" class="headerlink" title="反射性能的一般原则"></a>反射性能的一般原则</h3><p>基准测试结果的数值分析的一般原则建议：</p>
 <ul>
 <li>能使用原生代码时，尽量避免反射操作。</li>
 <li>提前缓冲反射值对象，对性能有很大的帮助。</li>

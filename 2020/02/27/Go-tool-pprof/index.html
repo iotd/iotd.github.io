@@ -15,12 +15,12 @@
     <meta name="keywords" content="Go,go-pprof," />
   
 
-  <meta name="description" content="Go tool pprof使用方式go中有pprof包来做代码的性能监控主要涉及两个pkg： 1234567891011#web服务器:import (    &quot;net&#x2F;http&quot;    _ &quot;net&#x2F;http&#x2F;pprof&quot;)#一般应用程序(实际应用无web交互)import (    &quot;net&#x2F;http">
+  <meta name="description" content="Go tool pprof使用方式go中有pprof包来做代码的性能监控主要涉及两个pkg： #web服务器: import (     &quot;net&#x2F;http&quot;     _ &quot;net&#x2F;http&#x2F;pprof&quot; )  #一般应用程序(实际应用无web交互) import (     &quot;net&#x2F;http&quot;     _ &quot;runtim">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go tool pprof性能监控调试工具基本使用说明">
 <meta property="og:url" content="https://wdft.com/2020/02/27/Go-tool-pprof/index.html">
 <meta property="og:site_name" content="Jack Liu Blog Note Page">
-<meta property="og:description" content="Go tool pprof使用方式go中有pprof包来做代码的性能监控主要涉及两个pkg： 1234567891011#web服务器:import (    &quot;net&#x2F;http&quot;    _ &quot;net&#x2F;http&#x2F;pprof&quot;)#一般应用程序(实际应用无web交互)import (    &quot;net&#x2F;http">
+<meta property="og:description" content="Go tool pprof使用方式go中有pprof包来做代码的性能监控主要涉及两个pkg： #web服务器: import (     &quot;net&#x2F;http&quot;     _ &quot;net&#x2F;http&#x2F;pprof&quot; )  #一般应用程序(实际应用无web交互) import (     &quot;net&#x2F;http&quot;     _ &quot;runtim">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-02-26T22:02:00.000Z">
 <meta property="article:modified_time" content="2020-02-26T22:04:57.990Z">
@@ -189,7 +189,7 @@
 
       <span class="post-count">
         <i class="icon-text"></i>
-        Count:910
+        Count:878
       </span>
 
       
@@ -212,9 +212,17 @@
       <!-- toc -->
 
 <h4 id="Go-tool-pprof使用方式"><a href="#Go-tool-pprof使用方式" class="headerlink" title="Go tool pprof使用方式"></a>Go tool pprof使用方式</h4><p>go中有pprof包来做代码的性能监控主要涉及两个pkg：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#web服务器:</span><br><span class="line">import (</span><br><span class="line">    &quot;net&#x2F;http&quot;</span><br><span class="line">    _ &quot;net&#x2F;http&#x2F;pprof&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">#一般应用程序(实际应用无web交互)</span><br><span class="line">import (</span><br><span class="line">    &quot;net&#x2F;http&quot;</span><br><span class="line">    _ &quot;runtime&#x2F;pprof&quot;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<pre><code>#web服务器:
+import (
+    &quot;net/http&quot;
+    _ &quot;net/http/pprof&quot;
+)
 
-<p>net/http/pprof中只是使用runtime/pprof包来进行封装了一下，并在http端口上暴露出来。</p>
+#一般应用程序(实际应用无web交互)
+import (
+    &quot;net/http&quot;
+    _ &quot;runtime/pprof&quot;
+)</code></pre><p>net/http/pprof中只是使用runtime/pprof包来进行封装了一下，并在http端口上暴露出来。</p>
 <h4 id="Go-tool-pprof辅助工具安装-图形工具graphviz为例"><a href="#Go-tool-pprof辅助工具安装-图形工具graphviz为例" class="headerlink" title="Go tool pprof辅助工具安装(图形工具graphviz为例)"></a>Go tool pprof辅助工具安装(图形工具graphviz为例)</h4><ul>
 <li><strong>Windows</strong>：  </li>
 </ul>
@@ -223,30 +231,29 @@
 <li><strong>Linux(例：Centos)</strong></li>
 </ul>
 <p>方式1).添加repo依赖<a href="http://204.178.9.49/graphviz-rhel.repo" target="_blank" rel="noopener">http://204.178.9.49/graphviz-rhel.repo</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum list available &#39;graphviz*&#39;</span><br><span class="line">yum install &#39;graphviz*&#39;  --skip-broken</span><br><span class="line">#备注：--skip-broken可选：跳过错误依赖，不加这个参数会提示安装包依赖错误，因为这里并不需要其它的安装包，所以跳过即可。</span><br></pre></td></tr></table></figure>
-<p>  –skip-broken可选：跳过错误依赖，不加这个参数会提示安装包依赖错误，因为这里并不需要其它的安装包，所以跳过即可。</p>
+<pre><code>yum list available &#39;graphviz*&#39;
+yum install &#39;graphviz*&#39;  --skip-broken
+#备注：--skip-broken可选：跳过错误依赖，不加这个参数会提示安装包依赖错误，因为这里并不需要其它的安装包，所以跳过即可。</code></pre><p>  –skip-broken可选：跳过错误依赖，不加这个参数会提示安装包依赖错误，因为这里并不需要其它的安装包，所以跳过即可。</p>
 <p>方式2).源码包编译安装<br>./configure<br>make<br>make install</p>
 <ul>
 <li><strong>MacOS</strong>:<br>brew install graphviz</li>
 </ul>
 <h4 id="Go-tool-pprof常用基本调试基本命令-默认30s采集时间，可通过–seconds"><a href="#Go-tool-pprof常用基本调试基本命令-默认30s采集时间，可通过–seconds" class="headerlink" title="Go tool pprof常用基本调试基本命令(默认30s采集时间，可通过–seconds)"></a>Go tool pprof常用基本调试基本命令(默认30s采集时间，可通过–seconds)</h4><h6 id="HTTP场景-参数可选-–text-："><a href="#HTTP场景-参数可选-–text-：" class="headerlink" title="HTTP场景(参数可选:–text)："></a>HTTP场景(参数可选:–text)：</h6><p>Heap profile:  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go tool pprof --text http:&#x2F;&#x2F;localhost:8080&#x2F;debug&#x2F;pprof&#x2F;heap</span><br></pre></td></tr></table></figure>
-<p>CPU profile:  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go tool pprof --text http:&#x2F;&#x2F;localhost:8080&#x2F;debug&#x2F;pprof&#x2F;profile</span><br></pre></td></tr></table></figure>
-<p>Goroutine blocking profile:  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go tool pprof --text http:&#x2F;&#x2F;localhost:8080&#x2F;debug&#x2F;pprof&#x2F;block</span><br></pre></td></tr></table></figure>
-
-<p>1.实时通过地址查看浏览器: <a href="http://localhost:8080/debug/pprof/" target="_blank" rel="noopener">http://localhost:8080/debug/pprof/</a>;<br>2.通过生成的profile文件分析;<br>选择指定的profile压缩gz文件(.gz),使用go tool pprof进入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">go tool pprof http:&#x2F;&#x2F;localhost:8080&#x2F;debug&#x2F;pprof&#x2F;profile</span><br><span class="line">#结束后直接进入交互：</span><br><span class="line">(pprof)</span><br><span class="line">  web</span><br><span class="line">(pprof)</span><br></pre></td></tr></table></figure>
-
-<p>如查看历史调试文件信息，通过指定的profile文件进入即可:<br>go tool pprof [*.gz]</p>
+<pre><code>go tool pprof --text http://localhost:8080/debug/pprof/heap  </code></pre><p>CPU profile:  </p>
+<pre><code>go tool pprof --text http://localhost:8080/debug/pprof/profile  </code></pre><p>Goroutine blocking profile:  </p>
+<pre><code>go tool pprof --text http://localhost:8080/debug/pprof/block  </code></pre><p>1.实时通过地址查看浏览器: <a href="http://localhost:8080/debug/pprof/" target="_blank" rel="noopener">http://localhost:8080/debug/pprof/</a>;<br>2.通过生成的profile文件分析;<br>选择指定的profile压缩gz文件(.gz),使用go tool pprof进入</p>
+<pre><code>go tool pprof http://localhost:8080/debug/pprof/profile
+#结束后直接进入交互：
+(pprof)
+  web
+(pprof)</code></pre><p>如查看历史调试文件信息，通过指定的profile文件进入即可:<br>go tool pprof [*.gz]</p>
 <p>pprof交互基本命令：web 直接生成web浏览器可访问的svg图;<br>(其他命令自行摸索)<br>Windows下自动生成.svg文件且调用默认浏览器访问;<br>MacOS下自动生成.gz文件，系统限制可根据提示文件路径通过手动访问查看;  </p>
 <p>【注意事项】：<br>profile文件为空的问题, heap和block一般不受影响。<br>执行交互web命令会报:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(pprof) web</span><br><span class="line">profile is empty</span><br><span class="line">(pprof)</span><br></pre></td></tr></table></figure>
-<p>产生原因：<br>pprof内存分析器采取抽样的方式，它仅仅从一些内存分配的子集中收集信息。有可能对一个对象的采样与被采样对象的大小成比例。通过使用go test –memprofilerate标识，或者通过程序启动时 的运行配置中的MemProfileRate变量来改变调整这个采样的比例。如果比例为1，则会导致全部申请的信息都会被收集，但是这样的话将会使得执行变慢。默认的采样比例是每512KB的内存申请就采样一次。</p>
+<pre><code>(pprof) web
+profile is empty
+(pprof) </code></pre><p>产生原因：<br>pprof内存分析器采取抽样的方式，它仅仅从一些内存分配的子集中收集信息。有可能对一个对象的采样与被采样对象的大小成比例。通过使用go test –memprofilerate标识，或者通过程序启动时 的运行配置中的MemProfileRate变量来改变调整这个采样的比例。如果比例为1，则会导致全部申请的信息都会被收集，但是这样的话将会使得执行变慢。默认的采样比例是每512KB的内存申请就采样一次。</p>
 <ul>
-<li>方法1).在进行调试时，指定运行参数，或运行代码中动态调整参数<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go tool pprof --text http:&#x2F;&#x2F;localhost:8080&#x2F;debug&#x2F;pprof&#x2F;profile</span><br></pre></td></tr></table></figure>
-此命令将会打印耗费最多CPU时间的函数列表。<br>这里有几种可用的输出形式，最实用的有 –text, –web 和 –list。运行 “go tool pprof” 来得到完整的列表。 </li>
+<li>方法1).在进行调试时，指定运行参数，或运行代码中动态调整参数<pre><code>go tool pprof --text http://localhost:8080/debug/pprof/profile</code></pre>此命令将会打印耗费最多CPU时间的函数列表。<br>这里有几种可用的输出形式，最实用的有 –text, –web 和 –list。运行 “go tool pprof” 来得到完整的列表。 </li>
 </ul>
 <p>【备注】：<br>实际测试时，MacOS下基本是空的,需要指定参数。</p>
 <ul>
@@ -295,7 +302,7 @@
     <a class="show pull-left" href="/2020/02/25/README/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2020/02/27/func/">
+    <a class="show pull-right" href="/2020/02/27/func-value/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>

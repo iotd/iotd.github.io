@@ -15,12 +15,12 @@
     <meta name="keywords" content="Go,func," />
   
 
-  <meta name="description" content="func 函数func函数（适用于method）小结Go函数数也是一种类型，可以和其他类型一样被保存在变量中。和接口一样，接口也是一种类型。 123456789101112package mainimport (    &quot;fmt&quot;)func foo() &amp;#123;    fmt.Println(&quot;foo&quot;)&amp;#125;func main() &amp;#123">
+  <meta name="description" content="func 函数func函数（适用于method）小结Go函数数也是一种类型，可以和其他类型一样被保存在变量中。和接口一样，接口也是一种类型。 package main import (     &quot;fmt&quot; ) func foo() {     fmt.Println(&quot;foo&quot;) } func main() {     var f func()">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go:func 函数">
 <meta property="og:url" content="https://wdft.com/2020/02/27/func/index.html">
 <meta property="og:site_name" content="Jack Liu Blog Note Page">
-<meta property="og:description" content="func 函数func函数（适用于method）小结Go函数数也是一种类型，可以和其他类型一样被保存在变量中。和接口一样，接口也是一种类型。 123456789101112package mainimport (    &quot;fmt&quot;)func foo() &amp;#123;    fmt.Println(&quot;foo&quot;)&amp;#125;func main() &amp;#123">
+<meta property="og:description" content="func 函数func函数（适用于method）小结Go函数数也是一种类型，可以和其他类型一样被保存在变量中。和接口一样，接口也是一种类型。 package main import (     &quot;fmt&quot; ) func foo() {     fmt.Println(&quot;foo&quot;) } func main() {     var f func()">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-02-26T22:02:01.000Z">
 <meta property="article:modified_time" content="2020-02-27T14:29:10.708Z">
@@ -189,7 +189,7 @@
 
       <span class="post-count">
         <i class="icon-text"></i>
-        Count:798
+        Count:755
       </span>
 
       
@@ -212,16 +212,56 @@
       <!-- toc -->
 
 <h1 id="func-函数"><a href="#func-函数" class="headerlink" title="func 函数"></a>func 函数</h1><h3 id="func函数（适用于method）小结"><a href="#func函数（适用于method）小结" class="headerlink" title="func函数（适用于method）小结"></a>func函数（适用于method）小结</h3><h5 id="Go函数"><a href="#Go函数" class="headerlink" title="Go函数"></a>Go函数</h5><p>数也是一种类型，可以和其他类型一样被保存在变量中。和接口一样，接口也是一种类型。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line">func foo() &#123;</span><br><span class="line">    fmt.Println(&quot;foo&quot;)</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">    var f func()</span><br><span class="line">    f &#x3D; foo</span><br><span class="line">    f()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>package main
+import (
+    &quot;fmt&quot;
+)
+func foo() {
+    fmt.Println(&quot;foo&quot;)
+}
+func main() {
+    var f func()
+    f = foo
+    f()
+}
+</code></pre><h5 id="Go函数类型实现接口——把函数作为接口来调用"><a href="#Go函数类型实现接口——把函数作为接口来调用" class="headerlink" title="Go函数类型实现接口——把函数作为接口来调用"></a>Go函数类型实现接口——把函数作为接口来调用</h5><p>函数体实现接口<br>函数的声明不能直接实现接口，需要将函数定义为类型后，使用类型实现结构体。当类型方法被调用时，还需要调用函数本体。</p>
+<pre><code>// 函数定义为类型
+type FuncCaller func(interface{}) // func(interface{}) 定义为 FuncCaller 类型。
+// 实现Invoker的Call
+func (f FuncCaller) Call(p interface{}) {
+    // 调用f()函数本体
+    f(p) 
+    //FuncCaller 的 Call() 方法将实现 Invoker 的 Call() 方法。
+    // FuncCaller 的 Call() 方法被调用与 func(interface{}) 无关，还需要手动调用函数本体。
+}
 
-<h5 id="Go函数类型实现接口——把函数作为接口来调用"><a href="#Go函数类型实现接口——把函数作为接口来调用" class="headerlink" title="Go函数类型实现接口——把函数作为接口来调用"></a>Go函数类型实现接口——把函数作为接口来调用</h5><p>函数体实现接口<br>函数的声明不能直接实现接口，需要将函数定义为类型后，使用类型实现结构体。当类型方法被调用时，还需要调用函数本体。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 函数定义为类型</span><br><span class="line">type FuncCaller func(interface&#123;&#125;) &#x2F;&#x2F; func(interface&#123;&#125;) 定义为 FuncCaller 类型。</span><br><span class="line">&#x2F;&#x2F; 实现Invoker的Call</span><br><span class="line">func (f FuncCaller) Call(p interface&#123;&#125;) &#123;</span><br><span class="line">    &#x2F;&#x2F; 调用f()函数本体</span><br><span class="line">    f(p) </span><br><span class="line">    &#x2F;&#x2F;FuncCaller 的 Call() 方法将实现 Invoker 的 Call() 方法。</span><br><span class="line">    &#x2F;&#x2F; FuncCaller 的 Call() 方法被调用与 func(interface&#123;&#125;) 无关，还需要手动调用函数本体。</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;代码备注：</span><br><span class="line">&#x2F;&#x2F;以上函数类型，需要函数本身进行逻辑处理。FuncCaller 无须被实例化，只需要将函数转</span><br><span class="line">&#x2F;&#x2F;换为 FuncCaller 类型即可，函数来源可以是命名函数、匿名函数或闭包。</span><br></pre></td></tr></table></figure>
+//代码备注：
+//以上函数类型，需要函数本身进行逻辑处理。FuncCaller 无须被实例化，只需要将函数转
+//换为 FuncCaller 类型即可，函数来源可以是命名函数、匿名函数或闭包。
+</code></pre><h5 id="HTTP实现场景："><a href="#HTTP实现场景：" class="headerlink" title="HTTP实现场景："></a>HTTP实现场景：</h5><p>函数 handler() 转为 HandlerFunc 类型，HandlerFunc 类型实现了 Handler 的 ServeHTTP 方法，<br>底层可以同时使用各种类型来实现 Handler 接口进行处理。</p>
+<pre><code>HTTP 包中包含有 Handler 接口定义，代码如下：
+type Handler interface {
+    ServeHTTP(ResponseWriter, *Request)
+}
+Handler 用于定义每个 HTTP 的请求和响应的处理过程。
 
-<h5 id="HTTP实现场景："><a href="#HTTP实现场景：" class="headerlink" title="HTTP实现场景："></a>HTTP实现场景：</h5><p>函数 handler() 转为 HandlerFunc 类型，HandlerFunc 类型实现了 Handler 的 ServeHTTP 方法，<br>底层可以同时使用各种类型来实现 Handler 接口进行处理。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">HTTP 包中包含有 Handler 接口定义，代码如下：</span><br><span class="line">type Handler interface &#123;</span><br><span class="line">    ServeHTTP(ResponseWriter, *Request)</span><br><span class="line">&#125;</span><br><span class="line">Handler 用于定义每个 HTTP 的请求和响应的处理过程。</span><br><span class="line"></span><br><span class="line">同时，也可以使用处理函数实现接口，定义如下：</span><br><span class="line">type HandlerFunc func(ResponseWriter, *Request)</span><br><span class="line">func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request) &#123;</span><br><span class="line">    f(w, r)</span><br><span class="line">&#125;</span><br><span class="line">要使用闭包实现默认的 HTTP 请求处理，可以使用 http.HandleFunc() 函数，函数定义如下：</span><br><span class="line">func HandleFunc(pattern string, handler func(ResponseWriter, *Request)) &#123;</span><br><span class="line">    DefaultServeMux.HandleFunc(pattern, handler)</span><br><span class="line">&#125;</span><br><span class="line">而 DefaultServeMux 是 ServeMux 结构，拥有 HandleFunc() 方法，定义如下：</span><br><span class="line">func (mux *ServeMux) HandleFunc(pattern string, handler func</span><br><span class="line">(ResponseWriter, *Request)) &#123;</span><br><span class="line">    mux.Handle(pattern, HandlerFunc(handler))</span><br><span class="line">&#125;</span><br><span class="line">上面代码将外部传入的函数 handler() 转为 HandlerFunc 类型，HandlerFunc 类型实现了 Handler 的 ServeHTTP 方法，  </span><br><span class="line">底层可以同时使用各种类型来实现 Handler 接口进行处理。</span><br></pre></td></tr></table></figure>
-
-
-<h5 id="Go可变参数函数调用注意事项（three-dots）"><a href="#Go可变参数函数调用注意事项（three-dots）" class="headerlink" title="Go可变参数函数调用注意事项（three dots）"></a>Go可变参数函数调用注意事项（three dots）</h5><ul>
+同时，也可以使用处理函数实现接口，定义如下：
+type HandlerFunc func(ResponseWriter, *Request)
+func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request) {
+    f(w, r)
+}
+要使用闭包实现默认的 HTTP 请求处理，可以使用 http.HandleFunc() 函数，函数定义如下：
+func HandleFunc(pattern string, handler func(ResponseWriter, *Request)) {
+    DefaultServeMux.HandleFunc(pattern, handler)
+}
+而 DefaultServeMux 是 ServeMux 结构，拥有 HandleFunc() 方法，定义如下：
+func (mux *ServeMux) HandleFunc(pattern string, handler func
+(ResponseWriter, *Request)) {
+    mux.Handle(pattern, HandlerFunc(handler))
+}
+上面代码将外部传入的函数 handler() 转为 HandlerFunc 类型，HandlerFunc 类型实现了 Handler 的 ServeHTTP 方法，  
+底层可以同时使用各种类型来实现 Handler 接口进行处理。
+</code></pre><h5 id="Go可变参数函数调用注意事项（three-dots）"><a href="#Go可变参数函数调用注意事项（three-dots）" class="headerlink" title="Go可变参数函数调用注意事项（three dots）"></a>Go可变参数函数调用注意事项（three dots）</h5><ul>
 <li>若将 string 数组切片，每项独自传入函数，则会执行[]T{arg1,arg2}等类似操作，从新进行初始化；</li>
 <li>若将 interface{} 数组切片打散后直接传入函数，则不再进行对象的创建，直接试用该对象；</li>
 </ul>
@@ -229,10 +269,11 @@
 <h5 id="调用拥有变长参数列表的函数"><a href="#调用拥有变长参数列表的函数" class="headerlink" title="调用拥有变长参数列表的函数"></a>调用拥有变长参数列表的函数</h5><p>slice类型参数不必拆分调用，直接在slice后跟…</p>
 <h5 id="标识数组元素个数"><a href="#标识数组元素个数" class="headerlink" title="标识数组元素个数"></a>标识数组元素个数</h5><p>例如[…]int{1,2,3}</p>
 <h5 id="Go命令行中的通配符"><a href="#Go命令行中的通配符" class="headerlink" title="Go命令行中的通配符"></a>Go命令行中的通配符</h5><p>描述包文件的通配符。会执行当前目录和所有子目录的所有包：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">go test .&#x2F;...</span><br><span class="line">go run .&#x2F;...</span><br><span class="line">go build .&#x2F;..</span><br></pre></td></tr></table></figure>
-
-
-
+<pre><code>
+go test ./...
+go run ./...
+go build ./..
+</code></pre>
     
   </div>
 </article>
@@ -269,10 +310,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2020/02/27/Go-tool-pprof/">
+    <a class="show pull-left" href="/2020/02/27/func-value/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2020/02/27/func-value/">
+    <a class="show pull-right" href="/2020/02/27/chain-operation/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
