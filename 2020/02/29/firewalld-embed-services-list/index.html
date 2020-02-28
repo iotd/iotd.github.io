@@ -7,25 +7,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Go:pointer | Jack Liu Blog Note Page</title>
+  <title>firewalld services 防火墙内嵌服务 | Jack Liu Blog Note Page</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Go,pointer," />
+    <meta name="keywords" content="firewalld,services,防火墙," />
   
 
-  <meta name="description" content="pointer 指针基于指针对象的方法当调用一个函数时，会对其每一个参数值进行拷贝，如果一个函数需要更新一个变量，或者函数的其中一个参数实在太大我们希望能够避免进行这种默认的拷贝，这种情况下我们就需要用到指针了。对应到我们这里用来更新接收器的对象的方法，当这个接受者变量本身比较大时，我们就可以用其指针而不是对象来声明方法，如下： func (p Point) ScaleBy(factor fl">
+  <meta name="description" content="firewalld services 防火墙内嵌服务Configuration file path: &#x2F;usr&#x2F;lib&#x2F;firewalld&#x2F;servicesamanda-client.xmlamanda-k5-client.xmlbacula-client.xmlbacula.xmlbitcoin-rpc.xmlbitcoin-testnet-rpc.xmlbitcoin-testnet.xm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go:pointer">
-<meta property="og:url" content="https://wdft.com/2020/02/27/pointer/index.html">
+<meta property="og:title" content="firewalld services 防火墙内嵌服务">
+<meta property="og:url" content="https://wdft.com/2020/02/29/firewalld-embed-services-list/index.html">
 <meta property="og:site_name" content="Jack Liu Blog Note Page">
-<meta property="og:description" content="pointer 指针基于指针对象的方法当调用一个函数时，会对其每一个参数值进行拷贝，如果一个函数需要更新一个变量，或者函数的其中一个参数实在太大我们希望能够避免进行这种默认的拷贝，这种情况下我们就需要用到指针了。对应到我们这里用来更新接收器的对象的方法，当这个接受者变量本身比较大时，我们就可以用其指针而不是对象来声明方法，如下： func (p Point) ScaleBy(factor fl">
+<meta property="og:description" content="firewalld services 防火墙内嵌服务Configuration file path: &#x2F;usr&#x2F;lib&#x2F;firewalld&#x2F;servicesamanda-client.xmlamanda-k5-client.xmlbacula-client.xmlbacula.xmlbitcoin-rpc.xmlbitcoin-testnet-rpc.xmlbitcoin-testnet.xm">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-02-26T22:02:08.000Z">
-<meta property="article:modified_time" content="2020-02-26T22:12:58.300Z">
+<meta property="article:published_time" content="2020-02-28T17:16:02.000Z">
+<meta property="article:modified_time" content="2020-02-28T17:18:06.817Z">
 <meta property="article:author" content="Jack Liu">
-<meta property="article:tag" content="Go,pointer">
+<meta property="article:tag" content="firewalld,services,防火墙">
 <meta name="twitter:card" content="summary">
 
   
@@ -164,20 +164,20 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">Posts List</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#pointer-指针"><span class="toc-text">pointer 指针</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基于指针对象的方法"><span class="toc-text">基于指针对象的方法</span></a></li></ol></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#firewalld-services-防火墙内嵌服务"><span class="toc-text">firewalld services 防火墙内嵌服务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Configuration-file-path-usr-lib-firewalld-services"><span class="toc-text">Configuration file path: &#x2F;usr&#x2F;lib&#x2F;firewalld&#x2F;services</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ssh-xml"><span class="toc-text">ssh.xml:</span></a></li></ol></li></ol>
   </div>
 
 
 
 <div class="content content-post CENTER">
-   <article id="post-pointer" class="article article-type-post" itemprop="blogPost">
+   <article id="post-firewalld-embed-services-list" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">Go:pointer</h1>
+    <h1 class="post-title">firewalld services 防火墙内嵌服务</h1>
 
     <div class="article-meta">
       <span>
         <i class="icon-calendar"></i>
-        <span>2020.02.27</span>
+        <span>2020.02.29</span>
       </span>
 
       
@@ -189,13 +189,13 @@
 
       <span class="post-count">
         <i class="icon-text"></i>
-        Count:1.4k
+        Count:255
       </span>
 
       
   <span class="article-category">
     <i class="icon-list"></i>
-    <a class="article-category-link" href="/categories/Go/">Go</a>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
   </span>
 
 
@@ -211,23 +211,9 @@
     
       <!-- toc -->
 
-<h1 id="pointer-指针"><a href="#pointer-指针" class="headerlink" title="pointer 指针"></a>pointer 指针</h1><h3 id="基于指针对象的方法"><a href="#基于指针对象的方法" class="headerlink" title="基于指针对象的方法"></a>基于指针对象的方法</h3><p>当调用一个函数时，会对其每一个参数值进行拷贝，如果一个函数需要更新一个变量，或者函数的其中一个参数实在太大我们希望能够避免进行这种默认的拷贝，这种情况下我们就需要用到指针了。对应到我们这里用来更新接收器的对象的方法，当这个接受者变量本身比较大时，我们就可以用其指针而不是对象来声明方法，如下：</p>
-<p>func (p <em>Point) ScaleBy(factor float64) {<br>    p.X <em>= factor<br>    p.Y *= factor<br>}<br>这个方法的名字是(</em>Point).ScaleBy。这里的括号是必须的；没有括号的话这个表达式可能会被理解为</em>(Point.ScaleBy)。</p>
-<p>在现实的程序里，一般会约定如果Point这个类有一个指针作为接收器的方法，那么所有Point的方法都必须有一个指针接收器，即使是那些并不需要这个指针接收器的函数。我们在这里打破了这个约定只是为了展示一下两种方法的异同而已。</p>
-<p>只有类型(Point)和指向他们的指针(*Point)，才是可能会出现在接收器声明里的两种接收器。此外，为了避免歧义，在声明方法时，如果一个类型名本身是一个指针的话，是不允许其出现在接收器中的，比如下面这个例子：</p>
-<p>type P <em>int<br>func (P) f() { /</em> … <em>/ } // compile error: invalid receiver type<br>想要调用指针类型方法(</em>Point).ScaleBy，只要提供一个Point类型的指针即可，像下面这样。</p>
-<p>r := &amp;Point{1, 2}<br>r.ScaleBy(2)<br>fmt.Println(*r) // “{2, 4}”<br>或者这样：</p>
-<p>p := Point{1, 2}<br>pptr := &amp;p<br>pptr.ScaleBy(2)<br>fmt.Println(p) // “{2, 4}”<br>或者这样:</p>
-<p>p := Point{1, 2}<br>(&amp;p).ScaleBy(2)<br>fmt.Println(p) // “{2, 4}”<br>不过后面两种方法有些笨拙。幸运的是，go语言本身在这种地方会帮到我们。如果接收器p是一个Point类型的变量，并且其方法需要一个Point指针作为接收器，我们可以用下面这种简短的写法：</p>
-<p>p.ScaleBy(2)<br>编译器会隐式地帮我们用&amp;p去调用ScaleBy这个方法。这种简写方法只适用于“变量”，包括struct里的字段比如p.X，以及array和slice内的元素比如perim[0]。我们不能通过一个无法取到地址的接收器来调用指针方法，比如临时变量的内存地址就无法获取得到：</p>
-<p>Point{1, 2}.ScaleBy(2) // compile error: can’t take address of Point literal<br>但是我们可以用一个<em>Point这样的接收器来调用Point的方法，因为我们可以通过地址来找到这个变量，只要用解引用符号</em>来取到该变量即可。编译器在这里也会给我们隐式地插入*这个操作符，所以下面这两种写法等价的：</p>
-<p>pptr.Distance(q)<br>(*pptr).Distance(q)<br>这里的几个例子可能让你有些困惑，所以我们总结一下：在每一个合法的方法调用表达式中，也就是下面三种情况里的任意一种情况都是可以的：</p>
-<p>不论是接收器的实际参数和其接收器的形式参数相同，比如两者都是类型T或者都是类型*T：</p>
-<p>Point{1, 2}.Distance(q) //  Point<br>pptr.ScaleBy(2)         // <em>Point<br>或者接收器实参是类型T，但接收器形参是类型</em>T，这种情况下编译器会隐式地为我们取变量的地址：</p>
-<p>p.ScaleBy(2) // implicit (&amp;p)<br>或者接收器实参是类型*T，形参是类型T。编译器会隐式地为我们解引用，取到指针指向的实际变量：</p>
-<p>pptr.Distance(q) // implicit (<em>pptr)<br>如果命名类型T(译注：用type xxx定义的类型)的所有方法都是用T类型自己来做接收器(而不是</em>T)，那么拷贝这种类型的实例就是安全的；调用他的任何一个方法也就会产生一个值的拷贝。比如time.Duration的这个类型，在调用其方法时就会被全部拷贝一份，包括在作为参数传入函数的时候。但是如果一个方法使用指针作为接收器，你需要避免对其进行拷贝，因为这样可能会破坏掉该类型内部的不变性。比如你对bytes.Buffer对象进行了拷贝，那么可能会引起原始对象和拷贝对象只是别名而已，但实际上其指向的对象是一致的。紧接着对拷贝后的变量进行修改可能会有让你意外的结果。</p>
-<p>译注： 作者这里说的比较绕，其实有两点：</p>
-<p>不管你的method的receiver是指针类型还是非指针类型，都是可以通过指针/非指针类型进行调用的，编译器会帮你做类型转换。<br>在声明一个method的receiver该是指针还是非指针类型时，你需要考虑两方面的内部，第一方面是这个对象本身是不是特别大，如果声明为非指针变量时，调用会产生一次拷贝；第二方面是如果你用指针类型作为receiver，那么你一定要注意，这种指针类型指向的始终是一块内存地址，就算你对其进行了拷贝。熟悉C或者C艹的人这里应该很快能明白。</p>
+<h3 id="firewalld-services-防火墙内嵌服务"><a href="#firewalld-services-防火墙内嵌服务" class="headerlink" title="firewalld services 防火墙内嵌服务"></a>firewalld services 防火墙内嵌服务</h3><h4 id="Configuration-file-path-usr-lib-firewalld-services"><a href="#Configuration-file-path-usr-lib-firewalld-services" class="headerlink" title="Configuration file path: /usr/lib/firewalld/services"></a>Configuration file path: /usr/lib/firewalld/services</h4><p>amanda-client.xml<br>amanda-k5-client.xml<br>bacula-client.xml<br>bacula.xml<br>bitcoin-rpc.xml<br>bitcoin-testnet-rpc.xml<br>bitcoin-testnet.xml<br>bitcoin.xml<br>ceph-mon.xml<br>ceph.xml<br>cfengine.xml<br>condor-collector.xml<br>ctdb.xml<br>dhcpv6-client.xml<br>dhcpv6.xml<br>dhcp.xml<br>dns.xml<br>docker-registry.xml<br>dropbox-lansync.xml<br>elasticsearch.xml<br>freeipa-ldaps.xml<br>freeipa-ldap.xml<br>freeipa-replication.xml<br>freeipa-trust.xml<br>ftp.xml<br>ganglia-client.xml<br>ganglia-master.xml<br>high-availability.xml<br><strong><span style="color:red;">https.xml</span></strong><br><strong><span style="color:red;">http.xml</span></strong><br>imaps.xml<br>imap.xml<br>ipp-client.xml<br>ipp.xml<br>ipsec.xml<br>iscsi-target.xml<br>kadmin.xml<br>kerberos.xml<br>kibana.xml<br>klogin.xml<br>kpasswd.xml<br>kshell.xml<br>ldaps.xml<br>ldap.xml<br>libvirt-tls.xml<br>libvirt.xml<br>managesieve.xml<br>mdns.xml<br>mosh.xml<br>mountd.xml<br>mssql.xml<br>ms-wbt.xml<br>mysql.xml<br>nfs.xml<br>nrpe.xml<br>ntp.xml<br>openvpn.xml<br>ovirt-imageio.xml<br>ovirt-storageconsole.xml<br>ovirt-vmconsole.xml<br>pmcd.xml<br>pmproxy.xml<br>pmwebapis.xml<br>pmwebapi.xml<br>pop3s.xml<br>pop3.xml<br>postgresql.xml<br>privoxy.xml<br>proxy-dhcp.xml<br>ptp.xml<br>pulseaudio.xml<br>puppetmaster.xml<br>quassel.xml<br>radius.xml<br>RH-Satellite-6.xml<br>rpc-bind.xml<br>rsh.xml<br>rsyncd.xml<br>samba-client.xml<br>samba.xml<br>sane.xml<br>sips.xml<br>sip.xml<br>smtp-submission.xml<br>smtps.xml<br>smtp.xml<br>snmptrap.xml<br>snmp.xml<br>spideroak-lansync.xml<br>squid.xml<br><strong><span style="color:red;">ssh.xml</span></strong><br>synergy.xml<br>syslog-tls.xml<br>syslog.xml<br>telnet.xml<br>tftp-client.xml<br>tftp.xml<br>tinc.xml<br>tor-socks.xml<br>transmission-client.xml<br>vdsm.xml<br>vnc-server.xml<br>wbem-https.xml<br>xmpp-bosh.xml<br>xmpp-client.xml<br>xmpp-local.xml<br>xmpp-server.xml  </p>
+<hr>
+<h4 id="ssh-xml"><a href="#ssh-xml" class="headerlink" title="ssh.xml:"></a>ssh.xml:</h4><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?<span class="type">xml</span> version="1.0" encoding="utf-8"?&gt;</span><br><span class="line">&lt;service&gt;</span><br><span class="line">  &lt;short&gt;SSH&lt;/short&gt;</span><br><span class="line">  &lt;description&gt;Secure Shell (SSH) <span class="keyword">is</span> a protocol <span class="keyword">for</span> logging <span class="keyword">into</span> <span class="keyword">and</span> executing commands <span class="keyword">on</span> remote machines. It provides secure <span class="keyword">encrypted</span> communications. <span class="keyword">If</span> you plan <span class="keyword">on</span> accessing your machine remotely via SSH <span class="keyword">over</span> a firewalled interface, <span class="keyword">enable</span> this <span class="keyword">option</span>. You need the openssh-<span class="keyword">server</span> package installed <span class="keyword">for</span> this <span class="keyword">option</span> <span class="keyword">to</span> be useful.&lt;/description&gt;</span><br><span class="line">  &lt;port protocol="tcp" port="22"/&gt;</span><br><span class="line">&lt;/service&gt;</span><br></pre></td></tr></table></figure>
 
     
   </div>
@@ -239,7 +225,7 @@
    <!-- size of one module in pixels, default 6 -->
    <div class="content content-post CENTER">
       <div style="text-align: center;">
-         <img  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIQAAACECAAAAAB0L9x7AAABxUlEQVR42u3aQVLEMAxE0dz/0mELIVJ/ZSi7Q7U3QE3GvKGMZck6jmac30b1mnpP9RweQWxBnDfjboK7Ca/PXp+vnvk1VxB2iGribh1dn6mQ1XxBvBfRLb5qgyIfKoh3I8jEd5A/XZhBLEVUAYwcZO5+WQcaR9EgliNokPr06+PTdhBLEacYKhnq3nPCEYQXols4081lujCD8ER0C2kSoEhiXH4fhBVCJS8E2RVVVGL8468RhAViesilCc4kIAbhh3haNJ9sWm1CHYQVoipaoMIGuGgZX8AEsR1Bgk4XiNTrKOkOwg5BAk4VpFRyo34OwhdBLljpZTzd9GQGFsQWhNqESFGsu6wjATAITwQ5+ZBGH5pYl6ggrBCTorgqwJMgV37gILYi6KFULbruUh93DARhgZgUvlRTINmwyuAWhB2CLCgVeNQ8LTIISwQtiqqFSQptctcMwgJBNhd1EJ4cmA/63xDEUgQ9yE4afSYNgUH4ISb1ClpwV8UzmRAHsR2hDhy0qY9e1JVJcRBWCHXooA07HwWxIF6HUEUPsqCD+B8I2rhBEqDysj8IOwRp3pomRbSpMAg/BElwu4uVJ81fOAEKYjXiC3X0wQHBkKhMAAAAAElFTkSuQmCC" />
+         <img  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAAAAABQV18IAAACHElEQVR42u2awXKDQAxD+f+fppf20JSVniGdQUR7IUMIvMyYtS1r28Tav5c6v4v18/3Rb7azq1ARUOqG7twK4PXa1+ep5xbqGVCrH62C2wEeQa2OhxyF+gio1WZog1a8NIX6TKijzdPlUpfEC/V8KBeILomSxPu2KqFQt4dyAftfx9PdTKFuDbWbpZpTFZwkmS+fWahoKBV4rvB3BZy6zgoqhYqGIiBuY50E93hjLVQUlNoQaePohDbVVBxeV6jHQE0LfTIAcHDLZFyoWCgHQYs5JaCd6mQKFQtFizG1oUrxywgeh/CFiocigiodcpOgtom6UPFQLnjJkNEFrxN5C/UcKBegpNl0wgcVeH99LlQ0lDPNqGHQFROPFVQKFQulNkeSpMkfcYl/KXIUKg6KGLiomXQ6wLbDokJFQl0xzpAHkOQrhZRCxUFNgo8OtaeD7T8vVKGioUiBNxFznWiPm4xCxUIR48MVQYwYAa35plBRUCrxkiE2EcUUsHyZChULRURWV9xNB5LOoFOo50G5om5i2qEmVbSjFioGym2gUwPOpPhbGnAKFQ/1jiEREUpQsBcqFmo3ixZ5xCRG67dCZUNRvx5JzlePY1djoW4LRQJ80iO6+yBxrlDxUM4gQxpT3BRcqRIK9QgoabwyhsNJ0Ygah0I9AoqIrxPxDBV1hYqHogYZYrBRQhox+RQqH8olyonIPwXfpqtQd4f6Ahf+iLhio2shAAAAAElFTkSuQmCC" />
       </div>
    </div>
 
@@ -253,7 +239,7 @@
       </li>
       <li class="post-copyright-link">
       <strong>Link:  </strong>
-      <a href="/2020/02/27/pointer/" target="_blank" title="Go:pointer">https://wdft.com/2020/02/27/pointer/</a>
+      <a href="/2020/02/29/firewalld-embed-services-list/" target="_blank" title="firewalld services 防火墙内嵌服务">https://wdft.com/2020/02/29/firewalld-embed-services-list/</a>
       </li>
       <li class="post-copyright-license">
         <strong>Copyright:  CC BY-NC-SA 4.0 </strong>
@@ -265,10 +251,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2020/02/27/null-judge/">
+    <a class="show pull-left" href="/2020/02/29/Centos7-Systemd-Service/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2020/02/27/printf/">
+    <a class="show pull-right" href="/2020/02/29/OpenSSH/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>

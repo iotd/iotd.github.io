@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wdft.com/2020/02/29/OpenSSH/</loc>
+    
+    <lastmod>2020-02-28T17:19:14.200Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wdft.com/2020/02/29/firewalld-embed-services-list/</loc>
+    
+    <lastmod>2020-02-28T17:18:06.817Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wdft.com/2020/02/29/Centos7-Systemd-Service/</loc>
+    
+    <lastmod>2020-02-28T17:16:59.137Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://wdft.com/2020/02/27/null-judge/</loc>
     
     <lastmod>2020-02-27T16:59:51.633Z</lastmod>
